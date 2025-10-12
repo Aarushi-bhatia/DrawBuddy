@@ -202,7 +202,7 @@ export default function Dashboard() {
               {/* <ThemeToggle /> */}
               <button 
                 onClick={handleSignOut}
-                className="flex items-center gap-2 px-4 py-2 text-gray-700 hover:text-gray-900 font-medium rounded-lg hover:bg-gray-100 transition-all duration-200"
+                className="flex cursor-pointer items-center gap-2 px-4 py-2 text-gray-700 hover:text-gray-900 font-medium rounded-lg hover:bg-gray-100 transition-all duration-200"
               >
                 <LogOut className="h-4 w-4" />
                 Sign out

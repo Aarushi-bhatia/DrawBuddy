@@ -1,5 +1,3 @@
-// src/components/TextInputOverlay.jsx
-"use client"
 import React, { useEffect, useRef } from "react"
 import ReactDOM from "react-dom"
 import styles from "./TextInputOverlay.module.css"
