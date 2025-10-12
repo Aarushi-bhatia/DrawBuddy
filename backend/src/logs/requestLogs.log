@@ -52,3 +52,7 @@
 ::1 - - [06/Oct/2025:06:53:18 +0000] "GET /user/rooms HTTP/1.1" 200 76
 ::1 - - [06/Oct/2025:06:53:20 +0000] "GET /user/rooms HTTP/1.1" 304 -
 ::1 - - [06/Oct/2025:06:53:24 +0000] "POST /room/join/325 HTTP/1.1" 200 66
+::1 - - [12/Oct/2025:14:02:19 +0000] "POST /user/signup HTTP/1.1" 201 159
+::1 - - [12/Oct/2025:14:06:00 +0000] "POST /user/login HTTP/1.1" 200 370
+::1 - - [12/Oct/2025:14:06:01 +0000] "GET /user/rooms HTTP/1.1" 200 12
+::1 - - [12/Oct/2025:14:06:02 +0000] "GET /user/rooms HTTP/1.1" 304 -

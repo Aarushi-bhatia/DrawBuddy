@@ -1,8 +1,37 @@
 import React, { useState, useEffect } from 'react';
 import { Pencil, Users, Zap, Shield, ArrowRight, Sparkles, Globe, MessageSquare, Video, Play } from 'lucide-react';
 import SketchWidget from '../ui/sketchWidget';
+import { Square, Circle, Type, Eraser, Undo, Redo } from 'lucide-react';
+
 
 const WhiteboardLanding = () => {
+  const [activeTool, setActiveTool] = useState('pencil');
+  const [cursors, setCursors] = useState([
+    { id: 1, x: 30, y: 40, name: 'Sarah', color: '#8B5CF6' },
+    { id: 2, x: 60, y: 25, name: 'Alex', color: '#EC4899' },
+    { id: 3, x: 45, y: 60, name: 'Mike', color: '#10B981' }
+  ]);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCursors(prev => prev.map(cursor => ({
+        ...cursor,
+        x: Math.max(10, Math.min(90, cursor.x + (Math.random() - 0.5) * 8)),
+        y: Math.max(10, Math.min(90, cursor.y + (Math.random() - 0.5) * 8))
+      })));
+    }, 2000);
+
+    return () => clearInterval(interval);
+  }, []);
+
+  const tools = [
+    { icon: Pencil, name: 'pencil', label: 'Draw' },
+    { icon: Square, name: 'square', label: 'Rectangle' },
+    { icon: Circle, name: 'circle', label: 'Circle' },
+    { icon: Type, name: 'text', label: 'Text' },
+    { icon: Eraser, name: 'eraser', label: 'Eraser' }
+  ];
+
   const [activeDemo, setActiveDemo] = useState(0);
   const [cursorPos, setCursorPos] = useState({ x: 0, y: 0 });
   const [scrollY, setScrollY] = useState(0);
@@ -85,40 +114,98 @@ const WhiteboardLanding = () => {
           {/* Hero Visual */}
           <div className="relative max-w-5xl mx-auto mt-16">
             <div className="absolute inset-0 bg-gradient-to-r from-blue-500/20 to-purple-500/20 rounded-3xl blur-3xl" />
+            
             <div className="relative bg-gradient-to-br from-slate-800/90 to-slate-900/90 backdrop-blur-xl rounded-3xl p-8 border border-white/10 shadow-2xl">
-              {/* Mock Whiteboard Interface */}
-              <div className="bg-white rounded-xl h-96 relative overflow-hidden shadow-inner">
-                {/* Mock toolbar */}
+             {/* Canvas Area */}
+            <div className="lg:col-span-10">
+              <div className="relative bg-white rounded-2xl shadow-2xl aspect-video overflow-hidden">
                 <div className="absolute top-4 left-4 flex gap-2">
                   {[...Array(6)].map((_, i) => (
                     <div key={i} className="w-10 h-10 bg-gradient-to-br from-slate-200 to-slate-300 rounded-lg" />
                   ))}
                 </div>
-                
-                {/* Animated drawing paths */}
+                {/* Grid Pattern */}
+                <div className="absolute inset-0 opacity-20" style={{
+                  backgroundImage: 'radial-gradient(circle, #ddd 1px, transparent 1px)',
+                  backgroundSize: '20px 20px'
+                }} />
+
+                {/* Sample Drawing Elements */}
                 <svg className="absolute inset-0 w-full h-full">
+                  {/* Animated Path */}
                   <path
-                    d="M 50 200 Q 150 150, 250 200 T 450 200"
-                    stroke="#3b82f6"
-                    strokeWidth="4"
+                    d="M 100 150 Q 200 100 300 150 T 500 150"
+                    stroke="#8B5CF6"
+                    strokeWidth="3"
                     fill="none"
                     strokeLinecap="round"
                     className="animate-pulse"
                   />
-                  <circle cx="350" cy="150" r="40" stroke="#10b981" strokeWidth="3" fill="none" />
-                  <rect x="100" y="250" width="80" height="60" stroke="#f59e0b" strokeWidth="3" fill="none" rx="8" />
+                  
+                  {/* Rectangle */}
+                  <rect
+                    x="150"
+                    y="220"
+                    width="120"
+                    height="80"
+                    stroke="#EC4899"
+                    strokeWidth="3"
+                    fill="none"
+                    rx="8"
+                    className="opacity-80"
+                  />
+                  
+                  {/* Circle */}
+                  <circle
+                    cx="450"
+                    cy="260"
+                    r="50"
+                    stroke="#10B981"
+                    strokeWidth="3"
+                    fill="none"
+                    className="opacity-80"
+                  />
+                  
+                  {/* Curved line */}
+                  <path
+                    d="M 350 100 C 400 80, 420 120, 450 100"
+                    stroke="#F59E0B"
+                    strokeWidth="2"
+                    fill="none"
+                    strokeLinecap="round"
+                  />
                 </svg>
 
-                {/* Animated cursors */}
-                <div className="absolute top-1/3 left-1/3 animate-bounce">
-                  <div className="w-4 h-4 bg-blue-500 rounded-full" />
-                  <div className="mt-1 px-2 py-1 bg-blue-500 rounded text-xs whitespace-nowrap">Alex</div>
+                {/* Animated Cursors */}
+                {cursors.map((cursor) => (
+                  <div
+                    key={cursor.id}
+                    className="absolute transition-all duration-2000 ease-in-out"
+                    style={{
+                      left: `${cursor.x}%`,
+                      top: `${cursor.y}%`,
+                      transform: 'translate(-50%, -50%)'
+                    }}
+                  >
+                    <svg width="24" height="24" viewBox="0 0 24 24" className="drop-shadow-lg">
+                      <path
+                        d="M5 3L19 12L12 13L8 20L5 3Z"
+                        fill={cursor.color}
+                        stroke="white"
+                        strokeWidth="1.5"
+                      />
+                    </svg>
+                    <div
+                      className="absolute top-6 left-6 px-2 py-1 rounded-md text-xs font-medium text-white whitespace-nowrap shadow-lg"
+                      style={{ backgroundColor: cursor.color }}
+                    >
+                      {cursor.name}
+                    </div>
+                  </div>
+                ))}
                 </div>
-                <div className="absolute top-1/2 right-1/3 animate-pulse">
-                  <div className="w-4 h-4 bg-green-500 rounded-full" />
-                  <div className="mt-1 px-2 py-1 bg-green-500 rounded text-xs whitespace-nowrap">Sam</div>
-                </div>
-              </div>
+                
+              </div> 
             </div>
           </div>
         </div>
@@ -140,7 +227,7 @@ const WhiteboardLanding = () => {
                 key={i}
                 className="group p-8 bg-white/5 backdrop-blur-sm rounded-2xl border border-white/10 hover:bg-white/10 hover:border-purple-500/50 transition-all hover:scale-105 hover:shadow-xl hover:shadow-purple-500/20"
               >
-                <div className="w-14 h-14 bg-gradient-to-br from-blue-500 to-purple-600 rounded-xl flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
+                <div className="w-14 h-14 bg-blue-400 rounded-xl flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
                   <feature.icon className="w-7 h-7" />
                 </div>
                 <h3 className="text-xl font-bold mb-2">{feature.title}</h3>
@@ -156,9 +243,6 @@ const WhiteboardLanding = () => {
       <footer className="relative z-10 border-t border-white/10 py-12 px-6 bg-black/20 backdrop-blur-sm">
         <div className="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-8">
           <div className="flex items-center gap-3">
-            <div className="w-10 h-10 bg-gradient-to-br from-blue-500 to-purple-600 rounded-xl flex items-center justify-center">
-              <Pencil className="w-5 h-5" />
-            </div>
             <span className="text-xl font-bold">CollabBoard</span>
           </div>
           <div className="flex gap-8 text-sm text-slate-400">

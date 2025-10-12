@@ -1,5 +1,3 @@
-"use client"
-
 import { useState } from "react"
 import { useNavigate, Link } from "react-router-dom"; 
 import { useAuth } from "../lib/auth"
@@ -51,30 +49,33 @@ export default function SignIn() {
 
   return (
     <div className="flex flex-col">
-      <div className="min-h-screen flex items-center justify-center bg-gradient-to-r from-blue-50 to-indigo-50">
-        <div className="bg-white p-8 rounded-lg shadow-xl w-full max-w-md transform transition-all duration-300 hover:scale-[1.01]">
-          <div className="text-center mb-6 text-black">
-            <h1 className="text-3xl font-bold gradient-text mb-2">
+      <div className="min-h-screen flex items-center justify-center bg-white from-slate-900 via-blue-900 to-slate-900 relative overflow-hidden">
+        
+
+        <div className="bg-white/95 backdrop-blur-xl p-10 rounded-2xl shadow-2xl w-full max-w-md transform transition-all duration-300 hover:shadow-blue-500/20 hover:shadow-3xl relative z-10 border border-white/20">
+          <div className="text-center mb-8">
+           
+            <h1 className="text-4xl font-bold bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent mb-2">
               Welcome Back
             </h1>
-            <p className="text-muted-foreground">
+            <p className="text-gray-600 text-sm">
               Sign in to continue to CollabBoard
             </p>
           </div>
 
           {errorMessage && (
-            <div className="text-red-600 bg-red-100 p-2 rounded-md mb-4 text-center">
+            <div className="text-red-700 bg-red-50 border border-red-200 p-3 rounded-xl mb-6 text-center text-sm font-medium animate-shake">
               {errorMessage}
             </div>
           )}
 
-          <form onSubmit={handleSubmit} className="space-y-4">
+          <form onSubmit={handleSubmit} className="space-y-5">
             <div>
               <label
                 htmlFor="email"
-                className="block text-sm font-medium text-gray-700 mb-1"
+                className="block text-sm font-semibold text-gray-700 mb-2"
               >
-                Email
+                Email Address
               </label>
               <input
                 id="email"
@@ -83,14 +84,14 @@ export default function SignIn() {
                 value={email}
                 onChange={e => setEmail(e.target.value)}
                 required
-                className="w-full text-black"
+                className="w-full px-4 py-3 text-gray-900 bg-gray-50 border border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 outline-none hover:bg-gray-100"
               />
             </div>
 
             <div className="relative">
               <label
                 htmlFor="password"
-                className="block text-sm font-medium text-gray-700 mb-1"
+                className="block text-sm font-semibold text-gray-700 mb-2"
               >
                 Password
               </label>
@@ -101,29 +102,29 @@ export default function SignIn() {
                 value={password}
                 onChange={e => setPassword(e.target.value)}
                 required
-                className="w-full text-black"
+                className="w-full px-4 py-3 pr-12 text-gray-900 bg-gray-50 border border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 outline-none hover:bg-gray-100"
               />
               <span
                 onClick={() => setShowPassword(!showPassword)}
-                className="absolute right-2 top-1/2 transform -translate-y-1/5 text-gray-600 cursor-pointer"
+                className="absolute right-4 top-[42px] text-gray-500 cursor-pointer hover:text-gray-700 transition-colors"
               >
                 {showPassword ? (
-                  <img src="/icons/eye.png" alt="Show" width={25} />
+                  <img src="/eye.png" alt="Show" width={22} className="opacity-70 hover:opacity-100 transition-opacity" />
                 ) : (
-                  <img src="/icons/hidden.png" alt="Hide" width={25} />
+                  <img src="/hidden.png" alt="Hide" width={22} className="opacity-70 hover:opacity-100 transition-opacity" />
                 )}
               </span>
             </div>
 
             <button
               type="submit"
-              className="w-full bg-blue-600 hover:bg-blue-700 text-white"
+              className="w-full bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white font-semibold py-3 px-4 rounded-xl transition-all duration-200 shadow-lg shadow-blue-500/30 hover:shadow-xl hover:shadow-blue-500/40 hover:-translate-y-0.5 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:translate-y-0 flex items-center justify-center"
               disabled={loading}
             >
               {loading ? (
                 <>
-                  <Loader2 className="mr-2 h-4 w-4 animate-spin" /> Signing
-                  in...
+                  <Loader2 className="mr-2 h-5 w-5 animate-spin" />
+                  Signing in...
                 </>
               ) : (
                 "Sign in"
@@ -131,12 +132,12 @@ export default function SignIn() {
             </button>
           </form>
 
-          <div className="mt-6 text-center">
-            <p className="text-sm text-muted-foreground text-black">
+          <div className="mt-8 text-center">
+            <p className="text-sm text-gray-600">
               Don't have an account?{" "}
               <Link
-                href="/auth/sign-up"
-                className="text-blue-600 hover:text-blue-700 font-medium"
+                to="/auth/sign-up"
+                className="text-blue-600 hover:text-blue-700 font-semibold hover:underline transition-all"
               >
                 Sign up
               </Link>
