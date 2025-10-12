@@ -177,44 +177,53 @@ export default function Dashboard() {
 
   if (loading) {
     return (
-      <div className="min-h-screen flex items-center justify-center">
-        <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary"></div>
+      <div className="min-h-screen flex items-center justify-center bg-gray-50">
+        <div className="flex flex-col items-center gap-4">
+          <div className="animate-spin rounded-full h-12 w-12 border-4 border-gray-200 border-t-blue-600"></div>
+          <p className="text-gray-600 font-medium">Loading your rooms...</p>
+        </div>
       </div>
     )
   }
 
   return (
     <AuthGuard>
-      <div className="min-h-screen bg-background">
+      <div className="min-h-screen bg-gray-50">
         {/* Navbar */}
-        <nav className="border-b">
+        <nav className="bg-white border-b border-gray-200 shadow-sm">
           <div className="container mx-auto px-6 py-4 flex justify-between items-center">
-            <a href={"/"}>
-              <div className="flex items-center space-x-2">
-                <SiExcalidraw className=" w-10 h-10" />
-                <span className="text-2xl font-bold "> </span>
+            <a href={"/"} className="transition-transform hover:scale-105">
+              <div className="flex items-center space-x-3">
+                
+                <span className="text-2xl font-bold text-gray-900">CollabBoard</span>
               </div>
             </a>
             <div className="flex items-center space-x-4">
               {/* <ThemeToggle /> */}
-              <button variant="ghost" onClick={handleSignOut}>
-                <LogOut className="h-4 w-4 mr-2" />
+              <button 
+                onClick={handleSignOut}
+                className="flex items-center gap-2 px-4 py-2 text-gray-700 hover:text-gray-900 font-medium rounded-lg hover:bg-gray-100 transition-all duration-200"
+              >
+                <LogOut className="h-4 w-4" />
                 Sign out
               </button>
             </div>
           </div>
         </nav>
 
-        <main className="container mx-auto px-6 py-8">
+        <main className="container mx-auto px-6 py-12">
           {/* Header and Create/Join buttons */}
-          <div className="flex justify-between items-center mb-8">
-            <h1 className="text-3xl font-bold">Your Rooms</h1>
-            <div className="flex gap-4">
+          <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 mb-10">
+            <div>
+              <h1 className="text-4xl font-bold text-gray-900 mb-2">Your Rooms</h1>
+              <p className="text-gray-600">Create and manage your collaborative spaces</p>
+            </div>
+            <div className="flex gap-3">
               {/* Create Room Dialog */}
               <Dialog>
                 <DialogTrigger asChild>
-                  <button>
-                    <Plus className="h-4 w-4 mr-2" />
+                  <button className="flex items-center gap-2 px-5 py-2.5 bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded-xl shadow-lg shadow-blue-500/30 hover:shadow-xl hover:shadow-blue-500/40 transition-all duration-200 hover:-translate-y-0.5">
+                    <Plus className="h-4 w-4" />
                     Create Room
                   </button>
                 </DialogTrigger>
@@ -226,10 +235,11 @@ export default function Dashboard() {
                       }
                     }
                   }}
+                  className="rounded-2xl"
                 >
                   <DialogHeader>
-                    <DialogTitle>Create New Room</DialogTitle>
-                    <DialogDescription>
+                    <DialogTitle className="text-2xl font-bold">Create New Room</DialogTitle>
+                    <DialogDescription className="text-gray-600">
                       Enter a name for your new room.
                     </DialogDescription>
                   </DialogHeader>
@@ -237,6 +247,7 @@ export default function Dashboard() {
                     placeholder="Room name"
                     value={newRoomName}
                     onChange={e => setNewRoomName(e.target.value)}
+                    className="px-4 py-3 rounded-xl border-gray-200 focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                   />
                   <DialogFooter>
                     <DialogClose asChild>
@@ -244,6 +255,7 @@ export default function Dashboard() {
                         ref={createRef}
                         onClick={createRoom}
                         disabled={!newRoomName.trim()}
+                        className="px-5 py-2.5 bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded-xl transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
                       >
                         Create
                       </button>
@@ -255,8 +267,8 @@ export default function Dashboard() {
               {/* Join Room Dialog */}
               <Dialog>
                 <DialogTrigger asChild>
-                  <button>
-                    <Door className="h-4 w-4 mr-2" />
+                  <button className="flex items-center gap-2 px-5 py-2.5 bg-white hover:bg-gray-50 text-gray-900 font-semibold rounded-xl border border-gray-200 shadow-sm hover:shadow-md transition-all duration-200 hover:-translate-y-0.5">
+                    <Door className="h-4 w-4" />
                     Join Room
                   </button>
                 </DialogTrigger>
@@ -268,10 +280,11 @@ export default function Dashboard() {
                       }
                     }
                   }}
+                  className="rounded-2xl"
                 >
                   <DialogHeader>
-                    <DialogTitle>Join Room</DialogTitle>
-                    <DialogDescription>
+                    <DialogTitle className="text-2xl font-bold">Join Room</DialogTitle>
+                    <DialogDescription className="text-gray-600">
                       Enter the name of the room you want to join.
                     </DialogDescription>
                   </DialogHeader>
@@ -279,6 +292,7 @@ export default function Dashboard() {
                     placeholder="Room name"
                     value={joinRoomName}
                     onChange={e => setJoinRoomName(e.target.value)}
+                    className="px-4 py-3 rounded-xl border-gray-200 focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                   />
                   <DialogFooter>
                     <DialogClose asChild>
@@ -288,6 +302,7 @@ export default function Dashboard() {
                           joinRoom()
                         }}
                         disabled={!joinRoomName.trim()}
+                        className="px-5 py-2.5 bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded-xl transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
                       >
                         Join
                       </button>
@@ -300,13 +315,15 @@ export default function Dashboard() {
 
           {/* Rooms List */}
           {rooms.length === 0 ? (
-            <Card>
-              <CardContent className="flex flex-col items-center justify-center py-12">
-                <Users className="h-12 w-12 text-muted-foreground mb-4" />
-                <p className="text-xl font-medium text-muted-foreground">
+            <Card className="border-gray-200 shadow-lg rounded-2xl overflow-hidden">
+              <CardContent className="flex flex-col items-center justify-center py-16">
+                <div className="p-4 bg-gray-100 rounded-2xl mb-4">
+                  <Users className="h-12 w-12 text-gray-400" />
+                </div>
+                <p className="text-xl font-semibold text-gray-900 mb-2">
                   No rooms created yet
                 </p>
-                <p className="text-sm text-muted-foreground mt-1">
+                <p className="text-sm text-gray-600">
                   Create your first room to get started
                 </p>
               </CardContent>
@@ -314,29 +331,27 @@ export default function Dashboard() {
           ) : (
             <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
               {rooms.map(room => (
-                <Card key={room.id}>
-                  <CardHeader>
-                    <CardTitle>{room.slug}</CardTitle>
-                    <CardDescription>
+                <Card key={room.id} className="border-gray-200 shadow-lg rounded-2xl overflow-hidden hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
+                  <CardHeader className="bg-gradient-to-br from-gray-50 to-white border-b border-gray-100">
+                    <CardTitle className="text-xl font-bold text-gray-900">{room.slug}</CardTitle>
+                    <CardDescription className="text-gray-600">
                       Created on {new Date(room.createdAt).toLocaleDateString()}
                     </CardDescription>
                   </CardHeader>
-                  <CardContent>
-                    <div className="flex space-x-2">
+                  <CardContent className="pt-6">
+                    <div className="flex gap-2">
                       <button
-                        className="flex-1"
                         onClick={() => {
                           joinRoom(room.slug)
                         }}
+                        className="flex-1 flex items-center justify-center gap-2 px-4 py-2.5 bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded-xl transition-all duration-200 shadow-md hover:shadow-lg"
                       >
-                        <Door className="h-4 w-4 mr-2" />
+                        <Door className="h-4 w-4" />
                         Join Room
                       </button>
-                      {/* Instead of deleting immediately, open a confirmation dialog */}
                       <button
-                        variant="destructive"
-                        size="icon"
                         onClick={() => setRoomToDelete(room.id)}
+                        className="px-3 py-2.5 bg-red-50 hover:bg-red-100 text-red-600 rounded-xl transition-all duration-200 border border-red-200 hover:border-red-300"
                       >
                         <Trash2 className="h-4 w-4" />
                       </button>
@@ -356,26 +371,31 @@ export default function Dashboard() {
               if (!open) setRoomToDelete(null)
             }}
           >
-            <DialogContent>
+            <DialogContent className="rounded-2xl">
               <DialogHeader>
-                <DialogTitle>Confirm Deletion</DialogTitle>
-                <DialogDescription>
+                <DialogTitle className="text-2xl font-bold text-gray-900">Confirm Deletion</DialogTitle>
+                <DialogDescription className="text-gray-600">
                   Are you sure you want to delete this room? This action cannot
                   be undone.
                 </DialogDescription>
               </DialogHeader>
-              <DialogFooter>
+              <DialogFooter className="gap-2">
                 <DialogClose asChild>
-                  <button onClick={() => setRoomToDelete(null)}>Cancel</button>
+                  <button 
+                    onClick={() => setRoomToDelete(null)}
+                    className="px-5 py-2.5 bg-gray-100 hover:bg-gray-200 text-gray-900 font-semibold rounded-xl transition-all duration-200"
+                  >
+                    Cancel
+                  </button>
                 </DialogClose>
                 <button
-                  variant="destructive"
                   onClick={() => {
                     if (roomToDelete) {
                       deleteRoom(roomToDelete)
                     }
                     setRoomToDelete(null)
                   }}
+                  className="px-5 py-2.5 bg-red-600 hover:bg-red-700 text-white font-semibold rounded-xl transition-all duration-200"
                 >
                   Delete
                 </button>
