@@ -6,8 +6,8 @@ import { validateInput } from "../middlewares/validateInput.js"
 const router = Router()
 
 router.post(
-  "/create/:slug",
-  validateInput(createRoomSchema, "params"),
+  "/create/",
+  validateInput(createRoomSchema, "body"),
   authMiddleware,
   roomControler.create
 )

@@ -1,7 +1,7 @@
 import { Link as ScrollLink } from "react-scroll";
 import { useEffect, useState, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import Video from "../components/videoComponent";
+// import Video from "../components/videoComponent";
 import {
   ArrowRight,
   Pen,
@@ -14,7 +14,7 @@ import {
   X,
 } from "lucide-react";
 // import { ThemeToggle } from "./components/theme-toggle";
-import HeroBackground from "../components/hero-background";
+// import HeroBackground from "../components/hero-background";
 import "../../src/index.css";
 import WhiteboardLanding from "./HeroPage";
 import {
